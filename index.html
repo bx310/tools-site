@@ -88,7 +88,106 @@ section{padding:48px 0}
 .article-body table{margin:12px 0}
 .article-body code{background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:.85rem;color:var(--primary)}
 
+
+.affiliate-section{background:linear-gradient(135deg,#fff7ed,#fef3c7);padding:48px 0}
+.affiliate-header{text-align:center;margin-bottom:32px}
+.affiliate-header .badge{display:inline-block;background:var(--accent);color:#000;padding:4px 14px;border-radius:20px;font-size:.8rem;font-weight:700;margin-bottom:12px}
+.affiliate-header h2{font-size:1.6rem;font-weight:700;margin-bottom:8px;color:#92400e}
+.affiliate-header p{color:#a16207;font-size:.95rem}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:32px}
+.product-card{background:#fff;border:1px solid #fcd34d;border-radius:12px;overflow:hidden;transition:.2s}
+.product-card:hover{box-shadow:0 6px 20px rgba(245,158,11,.2);transform:translateY(-3px)}
+.product-img{height:180px;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative}
+.product-tag{position:absolute;top:10px;left:10px;background:var(--danger);color:#fff;padding:3px 10px;border-radius:4px;font-size:.7rem;font-weight:700}
+.product-info{padding:14px}
+.product-info h4{font-size:.95rem;font-weight:600;margin-bottom:4px;color:var(--text)}
+.product-info .price{color:var(--danger);font-weight:700;font-size:1.05rem}
+.product-info .price .orig{color:var(--muted);text-decoration:line-through;font-weight:400;font-size:.8rem;margin-left:8px}
+.product-info .commission{font-size:.75rem;color:var(--success);margin-top:4px;font-weight:600}
+.product-info .btn-buy{display:block;text-align:center;margin-top:10px;padding:8px;background:linear-gradient(135deg,var(--accent),#fbbf24);color:#000;border-radius:6px;font-weight:700;text-decoration:none;font-size:.85rem;transition:.2s}
+.product-info .btn-buy:hover{background:#f59e0b}
+.setup-guide{background:#fff;border:1px solid #fcd34d;border-radius:12px;padding:24px;margin-bottom:32px}
+.setup-guide h3{font-size:1.15rem;font-weight:700;margin-bottom:16px;color:#92400e}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.step{background:#fffbeb;border-radius:8px;padding:14px;position:relative}
+.step-num{position:absolute;top:-10px;left:14px;background:var(--accent);color:#000;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem}
+.step h4{font-size:.9rem;font-weight:700;margin-top:4px;margin-bottom:4px}
+.step p{font-size:.82rem;color:var(--muted);line-height:1.5}
+.step a{color:var(--primary);font-weight:600}
+.platform-tabs{display:flex;gap:8px;margin-bottom:20px}
+.platform-tabs button{background:#fff;border:1px solid var(--border);padding:8px 20px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.9rem;transition:.2s}
+.platform-tabs button.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.product-cat-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.product-cat-tabs button{background:#fff;border:1px solid var(--border);padding:6px 14px;border-radius:20px;cursor:pointer;font-size:.82rem;transition:.2s}
+.product-cat-tabs button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+@media(max-width:768px){.product-grid{grid-template-columns:1fr}}
+
 </style>
+
+<!-- 好物推荐切换脚本 -->
+<script>
+let currentPlatform = 'all';
+let currentCategory = 'cnc';
+const affiliateProducts = {
+  cnc: [
+    {icon:'🔧',name:'硬质合金立铣刀 4刃 钨钢铣刀',price:'¥14.90',orig:'¥29.80',comm:'佣金~10%',tag:'热卖',link:'https://s.click.taobao.com/PLACEHOLDER1'},
+    {icon:'🔩',name:'数显卡尺 0-150mm 电子游标卡尺',price:'¥39.90',orig:'¥68.00',comm:'佣金~8%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER2'},
+    {icon:'📐',name:'螺纹塞规 M3-M12 通止规套装',price:'¥25.00',orig:'¥45.00',comm:'佣金~12%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER3'},
+    {icon:'🛠️',name:'R角铣刀 圆鼻刀 球头铣刀套装',price:'¥49.90',orig:'¥89.00',comm:'佣金~10%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER4'},
+    {icon:'📏',name:'千分尺 0-25mm 外径螺旋测微器',price:'¥58.00',orig:'¥98.00',comm:'佣金~8%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER5'},
+    {icon:'🧲',name:'磁性表座 + 百分表套装',price:'¥68.00',orig:'¥118.00',comm:'佣金~10%',tag:'推荐',link:'https://s.click.taobao.com/PLACEHOLDER6'},
+    {icon:'🗜️',name:'精密平口钳 3寸/4寸 工具磨用',price:'¥89.00',orig:'¥168.00',comm:'佣金~8%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER7'},
+    {icon:'💎',name:'PCD/CBN 超硬刀具 非标定制',price:'¥199.00',orig:'¥399.00',comm:'佣金~15%',tag:'高端',link:'https://s.click.taobao.com/PLACEHOLDER8'},
+  ],
+  dev: [
+    {icon:'📖',name:'《Python编程从入门到实践》第3版',price:'¥54.50',orig:'¥109.00',comm:'佣金~6%',tag:'畅销',link:'https://s.click.taobao.com/PLACEHOLDER_D1'},
+    {icon:'📖',name:'《AI大模型开发实战》',price:'¥49.00',orig:'¥98.00',comm:'佣金~8%',tag:'新品',link:'https://s.click.taobao.com/PLACEHOLDER_D2'},
+    {icon:'📖',name:'《数控宏程序编程从入门到精通》',price:'¥35.00',orig:'¥69.80',comm:'佣金~6%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER_D3'},
+    {icon:'🎓',name:'Python全栈开发 视频课程 + 源码',price:'¥99.00',orig:'¥299.00',comm:'佣金~15%',tag:'超值',link:'https://s.click.taobao.com/PLACEHOLDER_D4'},
+    {icon:'📖',name:'《JavaScript高级程序设计》第5版',price:'¥58.00',orig:'¥129.00',comm:'佣金~6%',tag:'经典',link:'https://s.click.taobao.com/PLACEHOLDER_D5'},
+    {icon:'🎓',name:'零基础学AI 人工智能入门课程',price:'¥39.90',orig:'¥199.00',comm:'佣金~20%',tag:'限时',link:'https://s.click.taobao.com/PLACEHOLDER_D6'},
+    {icon:'📖',name:'《机械加工工艺手册》全3册',price:'¥89.00',orig:'¥198.00',comm:'佣金~5%',tag:'工具书',link:'https://s.click.taobao.com/PLACEHOLDER_D7'},
+    {icon:'🎓',name:'Coursera ML专项课程 中文字幕',price:'¥49.00',orig:'¥399.00',comm:'佣金~10%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER_D8'},
+  ],
+  office: [
+    {icon:'🖥️',name:'机械键盘 红轴 87键办公游戏键盘',price:'¥89.00',orig:'¥199.00',comm:'佣金~8%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER_O1'},
+    {icon:'🖱️',name:'人体工学鼠标 垂直握持',price:'¥69.00',orig:'¥139.00',comm:'佣金~8%',tag:'健康',link:'https://s.click.taobao.com/PLACEHOLDER_O2'},
+    {icon:'💻',name:'笔记本电脑增高支架 铝合金',price:'¥39.90',orig:'¥79.00',comm:'佣金~12%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER_O3'},
+    {icon:'🔌',name:'65W GaN氮化镓充电器 多口快充',price:'¥49.00',orig:'¥99.00',comm:'佣金~10%',tag:'实用',link:'https://s.click.taobao.com/PLACEHOLDER_O4'},
+    {icon:'💡',name:'LED屏幕挂灯 防眩光 非对称光源',price:'¥119.00',orig:'¥249.00',comm:'佣金~8%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER_O5'},
+    {icon:'🎧',name:'主动降噪蓝牙耳机 办公使用',price:'¥99.00',orig:'¥299.00',comm:'佣金~12%',tag:'爆款',link:'https://s.click.taobao.com/PLACEHOLDER_O6'},
+    {icon:'📱',name:'手机平板支架 多角度调节',price:'¥19.90',orig:'¥39.00',comm:'佣金~15%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER_O7'},
+    {icon:'🪑',name:'人体工学腰靠 办公室座椅靠垫',price:'¥79.00',orig:'¥168.00',comm:'佣金~10%',tag:'',link:'https://s.click.taobao.com/PLACEHOLDER_O8'},
+  ]
+};
+
+function switchCategory(cat) {
+  currentCategory = cat;
+  document.querySelectorAll('.product-cat-tabs button').forEach(b => b.classList.remove('active'));
+  document.getElementById('cat-'+cat).classList.add('active');
+  renderProducts();
+}
+
+function renderProducts() {
+  const grid = document.getElementById('product-grid');
+  if (!grid) return;
+  const products = affiliateProducts[currentCategory] || [];
+  grid.innerHTML = products.map(p => `
+    <div class="product-card">
+      <div class="product-img">${p.icon}${p.tag?'<span class="product-tag">'+p.tag+'</span>':''}</div>
+      <div class="product-info">
+        <h4>${p.name}</h4>
+        <div class="price">${p.price}<span class="orig">${p.orig}</span></div>
+        <div class="commission">💰 ${p.commission}</div>
+        <a href="${p.link}" target="_blank" rel="nofollow" class="btn-buy">🔗 去购买</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', renderProducts);
+</script>
+
 </head>
 <body>
 <header>
@@ -99,6 +198,7 @@ section{padding:48px 0}
       <a href="#guides">使用指南</a>
       <a href="#faq">FAQ</a>
       <a href="#tutorials">教程</a>
+      <a href="#shop">🛒 好物</a>
       <a href="#donate">支持我们</a>
     </nav>
   </div>
@@ -214,6 +314,57 @@ section{padding:48px 0}
   • JSON互转 → 配合「API测试工具」「代码语法高亮」完成完整开发流程<br>
   • AI Prompt优化 → 配合「Markdown预览」编辑和导出优化后的Prompt<br>
   • 二维码生成 → 支持批量生成，适合营销和物料制作场景
+
+<!-- 好物推荐区 -->
+<section class="affiliate-section" id="shop">
+  <div class="container">
+    <div class="affiliate-header">
+      <span class="badge">🛒 好物推荐</span>
+      <h2>工程师&开发者装备推荐</h2>
+      <p>精选CNC刀具、编程书籍、AI课程、办公装备 —— 点击购买即支持我们</p>
+    </div>
+
+    <!-- 注册指南 -->
+    <div class="setup-guide">
+      <h3>📋 也想靠推荐商品赚钱？三步开通淘宝客</h3>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <h4>实名认证</h4>
+          <p>打开 <a href="https://www.alipay.com" target="_blank">支付宝</a> → 我的 → 实名认证，上传身份证+人脸验证（几分钟完成）</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <h4>开通淘宝联盟</h4>
+          <p>打开淘宝App → 我的 → <a href="https://pub.alimama.com" target="_blank">淘宝联盟</a> → 我要成为推广者，填写信息提交审核（24小时内）</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <h4>选品推广赚钱</h4>
+          <p>审核通过后，选品 → 生成推广链接 → 发布到网站/朋友圈/微信群，成交即赚佣金 1%~30%。<strong>完全免费，无任何费用！</strong></p>
+        </div>
+      </div>
+      <p style="margin-top:12px;font-size:.85rem;color:var(--muted)">
+        京东联盟入口：<a href="https://union.jd.com" target="_blank">union.jd.com</a>（审核约1周） | 更多问题请联系：boxie182@gmail.com
+      </p>
+    </div>
+
+    <!-- 分类切换 -->
+    <div class="product-cat-tabs">
+      <button class="active" id="cat-cnc" onclick="switchCategory('cnc')">⚙️ CNC刀具/量具</button>
+      <button id="cat-dev" onclick="switchCategory('dev')">📚 编程/AI书籍课程</button>
+      <button id="cat-office" onclick="switchCategory('office')">💻 办公/数码装备</button>
+    </div>
+
+    <!-- 商品网格 -->
+    <div class="product-grid" id="product-grid"></div>
+
+    <p style="text-align:center;font-size:.8rem;color:var(--muted);margin-top:8px">
+      ⚠️ 以上为淘宝客/京东联盟推广链接，点击购买后我们将获得少量佣金支持本站运营。您购买的价格不变，感谢支持！
+    </p>
+  </div>
+</section>
+
 </div></div><section id="donate"><div class="container">
   <div class="donate-section">
     <h3>☕ 支持 BXIE Tools 持续发展</h3>
